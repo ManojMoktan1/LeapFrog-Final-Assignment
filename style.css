@@ -26,8 +26,9 @@
 #layer4,
 #layer5,
 #flying_ghost,
-#enemy_plant,
-#enemy_spider_big,
+#ghost_zombie,
+#ghost_spider_big,
+#ghost_black,
 #fire,
 #collisionAnimation,
 #lives,
@@ -52,6 +53,10 @@
   background-image: url(./assests/images/background1.jpg);
 }
 
+.start-menu__title {
+  margin-bottom: 20px;
+}
+
 .game-tutorial {
   z-index: 3;
   background-image: url(./assests/images/background1.jpg);
@@ -71,14 +76,20 @@
   font-size: 18px;
 }
 
-.game-tutorial__close {
+.game-tutorial__close,
+#start-menu__play,
+#start-menu__description,
+#restart {
   padding: 10px 25px;
   background-color: white;
   text-decoration: none;
   transition: all 200ms ease;
 }
 
-.game-tutorial__close:hover {
+.game-tutorial__close:hover,
+#start-menu__play:hover,
+#start-menu__description:hover,
+#restart:hover {
   background-color: rgba(0, 0, 0, 0.719);
   color: white;
 }
@@ -89,4 +100,15 @@
 
 .hide {
   display: none;
+}
+
+li {
+  list-style-type: none;
+  margin-bottom: 40px;
+}
+
+.gameover-menu__title,
+.gameover-menu__game-status,
+.gameover-menu__score {
+  margin-bottom: 30px;
 }

@@ -1,8 +1,8 @@
 const GAMEWIN = new Audio();
-GAMEWIN.src = "assests/gamComplete.wav";
+GAMEWIN.src = "assests/Sounds/gamComplete.wav";
 
 const GAMEOVER = new Audio();
-GAMEOVER.src = "assests/gamOver.wav";
+GAMEOVER.src = "assests/Sounds/gamOver.wav";
 
 export class UI {
   constructor(game) {
@@ -39,12 +39,18 @@ export class UI {
     context.strokeRect(100, 120, 100, 20);
     context.fillRect(100, 120, this.game.lives, 20);
 
+    //target Score
+    context.fillText("Target: 60 ", 1400, 50);
+
     //game over messages
     if (this.game.gameOver) {
-      if (this.game.score > this.game.winningScore) {
+      if (this.game.score >= this.game.winningScore) {
         this.game.gameOverDiv.classList.remove("hide");
+        this.game.gameStatusDiv.innerText = `YOU WIN!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
+        console.log("win");
       } else {
+        this.game.gameStatusDiv.innerText = `YOU LOSE!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
         this.game.gameOverDiv.classList.remove("hide");
       }

@@ -16,7 +16,7 @@
   <body>
     <div class="start-menu">
       <div>
-        <h1>GHOST HUNTER</h1>
+        <h1 class="start-menu__title">GHOST HUNTER</h1>
       </div>
       <div>
         <ul>
@@ -39,18 +39,23 @@
         <li>Press Down Arrow to stand still.</li>
         <li>Press R to throw fireball</li>
         <li>Press Space to do a rolling attack</li>
+        <li>
+          If the player score is greater than the target score, player wins
+        </li>
+        <li>If the player score is less than the target score, player loses</li>
       </ul>
       <a class="game-tutorial__close" href="#">CLOSE</a>
     </div>
 
     <div class="gameover-menu hide">
       <div>
-        <h1>Game Over</h1>
+        <h1 class="gameover-menu__title">GAME OVER!!!</h1>
       </div>
       <div>
+        <h2 class="gameover-menu__game-status"></h2>
         <h3 class="gameover-menu__score">Score:</h3>
       </div>
-      <a id="restart" href="#">Restart </a>
+      <a id="restart" href="#">RESTART</a>
     </div>
 
     <canvas id="canvas1"> </canvas>
@@ -58,9 +63,11 @@
     <img id="player1" src="assests/images/spin.png" />
     <img id="layer4" src="assests/images/ghostBackground.jpg" />
     <img id="layer5" src="assests/images/layer-10.png" />
-    <img id="flying_ghost" src="assests/images/enemy_ghost_red1.png" />
-    <img id="enemy_plant" src="assests/images/walking_zombie.png" />
-    <img id="enemy_spider_big" src="assests/images/enemy_spider_big.png" />
+    <img id="flying_ghost" src="assests/images/enemy_ghost_3.png" />
+    <img id="ghost_zombie" src="assests/images/walking_zombie.png" />
+    <img id="ghost_spider_big" src="assests/images/enemy_spider_big.png" />
+    <img id="ghost_black" src="assests/images/enemy_ghost_red1.png" />
+
     <img id="fire" src="assests/images/fire.png" />
     <img id="collisionAnimation" src="assests/images/boom.png" />
     <img id="fireball" src="assests/images/fireball (1).png" />

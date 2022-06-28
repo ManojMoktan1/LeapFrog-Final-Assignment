@@ -1,7 +1,7 @@
 import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Background } from "./background.js";
-import { FlyingGhost, GhostSpider, WalkingZombie } from "./enemies.js";
+import { FlyingGhost, GhostSpider, WalkingZombie } from "./ghosts.js";
 import { UI } from "./UI.js";
 
 window.addEventListener("load", function () {
@@ -19,7 +19,7 @@ window.addEventListener("load", function () {
   const gameTutorialCloseBtn = document.querySelector(".game-tutorial__close");
 
   // const GAMESOUND = new Audio();
-  // GAMESOUND.src = "assests/gameSound.wav";
+  // GAMESOUND.src = "assests/Sounds/gameSound.wav";
 
   function initializeListeners() {
     startBtn.addEventListener("click", (e) => {
@@ -64,27 +64,30 @@ window.addEventListener("load", function () {
       this.player.currentState.enter();
       this.input = new InputHandler(this);
       this.UI = new UI(this);
-      this.enemies = [];
+      this.ghosts = [];
       this.particles = [];
       this.collisions = [];
       this.floatingScores = [];
       this.maxParticles = 100;
-      this.enemyTimer = 0;
-      this.enemyInterval = 1000;
+      this.ghostTimer = 0;
+      this.ghostInterval = 1000;
       this.score = 0;
-      this.winningScore = 0;
+      this.winningScore = 60;
       this.fontColor = "white";
       this.time = 0;
-      this.maxTime = 50000;
+      this.maxTime = 60000;
       this.gameOver = false;
       this.lives = 100;
 
       this.sound = new Audio();
-      this.sound.src = "assests/gameSound1.mp3";
+      this.sound.src = "assests/Sounds/gameSound1.mp3";
       this.fireballs = [];
       this.frames = 0;
       this.gameOverDiv = document.querySelector(".gameover-menu");
       this.gameScore = document.querySelector(".gameover-menu__score");
+      this.gameStatusDiv = document.querySelector(
+        ".gameover-menu__game-status"
+      );
     }
 
     update(deltaTime) {
@@ -95,15 +98,15 @@ window.addEventListener("load", function () {
       if (this.time > this.maxTime) this.gameOver = true;
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
-      //handle enemies
-      if (this.enemyTimer > this.enemyInterval) {
-        this.addEnemy();
-        this.enemyTimer = 0;
+      //handle ghosts
+      if (this.ghostTimer > this.ghostInterval) {
+        this.addGhost();
+        this.ghostTimer = 0;
       } else {
-        this.enemyTimer += deltaTime;
+        this.ghostTimer += deltaTime;
       }
-      this.enemies.forEach((enemy) => {
-        enemy.update(deltaTime);
+      this.ghosts.forEach((ghost) => {
+        ghost.update(deltaTime);
       });
       //handle messages
       this.floatingScores.forEach((message) => {
@@ -121,7 +124,7 @@ window.addEventListener("load", function () {
       this.collisions.forEach((collision, index) => {
         collision.update(deltaTime);
       });
-      this.enemies = this.enemies.filter((enemy) => !enemy.checkForRemove);
+      this.ghosts = this.ghosts.filter((ghost) => !ghost.checkForRemove);
       this.particles = this.particles.filter(
         (particle) => !particle.checkForRemove
       );
@@ -135,24 +138,26 @@ window.addEventListener("load", function () {
 
     gameRestart() {
       this.speed = 0;
-      this.enemies = [];
+      this.ghosts = [];
       this.particles = [];
       this.collisions = [];
       this.floatingScores = [];
       this.score = 0;
       this.time = 0;
+      this.maxTime = 60000;
       this.gameOver = false;
       this.lives = 100;
       this.player = new Player(this);
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
+      this.fireballs = [];
     }
 
     draw(context) {
       this.background.draw(context);
       this.player.draw(context);
-      this.enemies.forEach((enemy) => {
-        enemy.draw(context);
+      this.ghosts.forEach((ghost) => {
+        ghost.draw(context);
       });
       this.particles.forEach((particle) => {
         particle.draw(context);
@@ -167,11 +172,11 @@ window.addEventListener("load", function () {
       this.UI.draw(context);
     }
 
-    addEnemy() {
+    addGhost() {
       if (this.speed > 0 && Math.random() < 0.5)
-        this.enemies.push(new WalkingZombie(this));
-      else if (this.speed > 0) this.enemies.push(new GhostSpider(this));
-      this.enemies.push(new FlyingGhost(this));
+        this.ghosts.push(new WalkingZombie(this));
+      else if (this.speed > 0) this.ghosts.push(new GhostSpider(this));
+      this.ghosts.push(new FlyingGhost(this));
     }
   }
 

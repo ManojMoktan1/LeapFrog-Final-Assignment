@@ -13,7 +13,7 @@ import { FloatingScore } from "./floatingScore.js";
 import FireBall from "./FireBall.js";
 
 const ATTACK = new Audio();
-ATTACK.src = "assests/TailWhip.flac";
+ATTACK.src = "assests/Sounds/TailWhip.flac";
 
 export class Player {
   constructor(game) {
@@ -82,35 +82,35 @@ export class Player {
     this.game.fireballs.forEach((fireball, idx) => {
       fireball.update();
 
-      this.game.enemies.forEach((enemy, enemyIdx) => {
+      this.game.ghosts.forEach((ghost, ghostIdx) => {
         if (
-          enemy.x < fireball.x + fireball.width &&
-          enemy.x + enemy.width > fireball.x &&
-          enemy.y < fireball.y + fireball.height &&
-          enemy.y + enemy.height > fireball.y
+          ghost.x < fireball.x + fireball.width &&
+          ghost.x + ghost.width > fireball.x &&
+          ghost.y < fireball.y + fireball.height &&
+          ghost.y + ghost.height > fireball.y
         ) {
           // console.log("testing");
-          // if (enemy.unique) {
+          // if (ghost.unique) {
           //   this.game.time -= 100;
           // }
-          enemy.checkForRemove = true;
+          ghost.checkForRemove = true;
 
-          // Unique enemies
-          if (enemy.unique) {
+          // Unique ghosts
+          if (ghost.unique) {
             this.game.time = this.game.time > 2000 ? this.game.time - 2000 : 0;
           }
           this.game.collisions.push(
             new CollisionAnimation(
               this.game,
-              enemy.x + enemy.width * 0.5,
-              enemy.y + enemy.height * 0.5
+              ghost.x + ghost.width * 0.5,
+              ghost.y + ghost.height * 0.5
             )
           );
-          this.game.enemies.splice(enemyIdx, 1);
+          this.game.ghosts.splice(ghostIdx, 1);
           this.game.fireballs.splice(idx, 1);
           this.game.score++;
           this.game.floatingScores.push(
-            new FloatingScore("+1 Score", enemy.x, enemy.y, 0, 0)
+            new FloatingScore("+1 Score", ghost.x, ghost.y, 0, 0)
           );
         }
       });
@@ -173,25 +173,25 @@ export class Player {
     this.currentState.enter();
   }
   checkCollison() {
-    this.game.enemies.forEach((enemy) => {
+    this.game.ghosts.forEach((ghost) => {
       if (
-        enemy.x < this.x + this.width &&
-        enemy.x + enemy.width > this.x &&
-        enemy.y < this.y + this.height &&
-        enemy.y + enemy.height > this.y
+        ghost.x < this.x + this.width &&
+        ghost.x + ghost.width > this.x &&
+        ghost.y < this.y + this.height &&
+        ghost.y + ghost.height > this.y
       ) {
         //collision detected
-        enemy.checkForRemove = true;
+        ghost.checkForRemove = true;
 
-        // Unique enemies
-        if (enemy.unique) {
+        // Unique ghosts
+        if (ghost.unique) {
           this.game.time = this.game.time > 2000 ? this.game.time - 2000 : 0;
         }
         this.game.collisions.push(
           new CollisionAnimation(
             this.game,
-            enemy.x + enemy.width * 0.5,
-            enemy.y + enemy.height * 0.5
+            ghost.x + ghost.width * 0.5,
+            ghost.y + ghost.height * 0.5
           )
         );
         if (
@@ -200,7 +200,7 @@ export class Player {
         ) {
           this.game.score++;
           this.game.floatingScores.push(
-            new FloatingScore("+1 Score", enemy.x, enemy.y, 0, 0)
+            new FloatingScore("+1 Score", ghost.x, ghost.y, 0, 0)
           );
           ATTACK.play();
         } else {

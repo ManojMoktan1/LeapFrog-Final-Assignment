@@ -1,10 +1,10 @@
 import { Dust, Fire, Splash } from "./particles.js";
 
 const JUMP = new Audio();
-JUMP.src = "assests/jump1.wav";
+JUMP.src = "assests/Sounds/jump1.wav";
 
 const CRASH = new Audio();
-CRASH.src = "assests/takeHit.wav";
+CRASH.src = "assests/Sounds/takeHit.wav";
 
 const states = {
   STANDING: 0,

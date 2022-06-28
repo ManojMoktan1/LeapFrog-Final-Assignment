@@ -47,6 +47,7 @@ export class FlyingGhost extends Ghost {
     this.speedY = 0;
     this.maxFrame = 5;
     this.image = document.getElementById("flying_ghost");
+    this.image1 = document.getElementById("ghost_black");
     this.angle = 0;
     this.va = Math.random() * 0.1 + 0.1; //velocity of angle for angle
     // this.unique = this.game.frames % 1 == 0 ? true : false;
@@ -61,8 +62,17 @@ export class FlyingGhost extends Ghost {
   draw(context) {
     super.draw(context);
     if (this.unique) {
-      context.fillStyle = "blue";
-      context.fillRect(this.x, this.y, this.width, this.height);
+      context.drawImage(
+        this.image1,
+        this.frameX * this.width,
+        0,
+        this.width,
+        this.height,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
     }
   }
 }
@@ -75,7 +85,7 @@ export class WalkingZombie extends Ghost {
     this.height = 175;
     this.x = this.game.width;
     this.y = this.game.height - this.height - this.game.groundMargin;
-    this.image = document.getElementById("enemy_plant");
+    this.image = document.getElementById("ghost_zombie");
     this.speedX = 1;
     this.speedY = 0;
     this.maxFrame = 7;
@@ -90,7 +100,7 @@ export class GhostSpider extends Ghost {
     this.height = 144;
     this.x = this.game.width;
     this.y = Math.random() * this.game.height * 0.5;
-    this.image = document.getElementById("enemy_spider_big");
+    this.image = document.getElementById("ghost_spider_big");
     this.speedX = 0;
     this.speedY = Math.random() > 0.5 ? 1 : -1;
     this.maxFrame = 5;
