@@ -7,7 +7,8 @@
 #canvas1,
 .start-menu,
 .gameover-menu,
-.game-tutorial {
+.game-tutorial,
+.game-controls {
   border: 5px solid black;
   position: absolute;
   top: 50%;
@@ -38,7 +39,8 @@
 
 .start-menu,
 .gameover-menu,
-.game-tutorial {
+.game-tutorial,
+.game-controls {
   width: 1500px;
   height: 500px;
   background-color: red;
@@ -57,21 +59,25 @@
   margin-bottom: 20px;
 }
 
-.game-tutorial {
+.game-tutorial,
+.game-controls {
   z-index: 3;
   background-image: url(./assests/images/background1.jpg);
 }
 
-.game-tutorial__title {
+.game-tutorial__title,
+.game-controls__title {
   margin-bottom: 20px;
   font-size: 40px;
 }
 
-.game-tutorial ul {
+.game-tutorial ul,
+.game-controls ul {
   list-style-type: none;
 }
 
-.game-tutorial li {
+.game-tutorial li,
+.game-controls li {
   margin-bottom: 5px;
   font-size: 18px;
 }
@@ -79,6 +85,8 @@
 .game-tutorial__close,
 #start-menu__play,
 #start-menu__description,
+#start-menu__controls,
+.game-controls__close,
 #restart {
   padding: 10px 25px;
   background-color: white;
@@ -89,12 +97,15 @@
 .game-tutorial__close:hover,
 #start-menu__play:hover,
 #start-menu__description:hover,
-#restart:hover {
+#restart:hover,
+.game-controls__close:hover,
+#start-menu__controls:hover {
   background-color: rgba(0, 0, 0, 0.719);
   color: white;
 }
 
-.game-tutorial__desc {
+.game-tutorial__desc,
+.game-controls__desc {
   margin-bottom: 20px;
 }
 

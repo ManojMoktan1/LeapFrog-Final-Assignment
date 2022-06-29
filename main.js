@@ -15,8 +15,11 @@ window.addEventListener("load", function () {
   const startBtn = document.querySelector("#start-menu__play");
   const restartBtn = document.querySelector("#restart");
   const gameDescriptionBtn = document.querySelector("#start-menu__description");
+  const gameControlsBtn = document.querySelector("#start-menu__controls");
   const gameTutorial = this.document.querySelector(".game-tutorial");
   const gameTutorialCloseBtn = document.querySelector(".game-tutorial__close");
+  const gameControlsDiv = document.querySelector(".game-controls");
+  const gameControlsCloseBtn = document.querySelector(".game-controls__close");
 
   // const GAMESOUND = new Audio();
   // GAMESOUND.src = "assests/Sounds/gameSound.wav";
@@ -25,13 +28,15 @@ window.addEventListener("load", function () {
     startBtn.addEventListener("click", (e) => {
       e.preventDefault();
       startMenu.classList.add("hide");
+
+      prevTime = Date.now();
       animate(0);
     });
 
     restartBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      game.gameOverDiv.style.display = "none";
       game.gameRestart();
+      prevTime = Date.now();
       animate(0);
     });
 
@@ -39,12 +44,24 @@ window.addEventListener("load", function () {
       gameTutorial.classList.remove("hide");
     });
 
+    gameControlsBtn.addEventListener("click", () => {
+      gameControlsDiv.classList.remove("hide");
+    });
+
     gameTutorialCloseBtn.addEventListener("click", () => {
       gameTutorial.classList.add("hide");
+    });
+
+    gameControlsCloseBtn.addEventListener("click", () => {
+      gameControlsDiv.classList.add("hide");
     });
   }
 
   class Game {
+    /**
+     * @param  {number} width
+     * @param  {number} height
+     */
     constructor(width, height) {
       this.gameState = {
         currentState: 0,
@@ -90,12 +107,15 @@ window.addEventListener("load", function () {
       );
     }
 
-    update(deltaTime) {
+    update(deltaTime, timeDif) {
       // this.sound.play();
       // this.sound.volume = 0.1;
-
-      this.time += deltaTime;
-      if (this.time > this.maxTime) this.gameOver = true;
+      console.log("delta time", deltaTime);
+      this.time += timeDif;
+      // this.time += deltaTime;
+      if (this.time > this.maxTime) {
+        this.gameOver = true;
+      }
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
       //handle ghosts
@@ -144,13 +164,14 @@ window.addEventListener("load", function () {
       this.floatingScores = [];
       this.score = 0;
       this.time = 0;
-      this.maxTime = 60000;
       this.gameOver = false;
       this.lives = 100;
       this.player = new Player(this);
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
       this.fireballs = [];
+      this.gameOverDiv.classList.add("hide");
+      prevTime = Date.now();
     }
 
     draw(context) {
@@ -181,16 +202,24 @@ window.addEventListener("load", function () {
   }
 
   const game = new Game(canvas.width, canvas.height);
+
   let lastTime = 0;
+  let prevTime;
   initializeListeners();
 
   function animate(timeStamp) {
+    // console.log("timestamp", timeStamp);
+    const currentTime = Date.now();
+    const timeDif = currentTime - prevTime;
+    prevTime = currentTime;
+
     const deltaTime = timeStamp - lastTime;
     lastTime = timeStamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.update(deltaTime);
+    game.update(deltaTime, timeDif);
     game.draw(ctx);
     game.frames++;
+    console.log(game.time);
     if (!game.gameOver) {
       requestAnimationFrame(animate);
     }

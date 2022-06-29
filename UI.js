@@ -45,11 +45,12 @@ export class UI {
     //game over messages
     if (this.game.gameOver) {
       if (this.game.score >= this.game.winningScore) {
+        console.log("win");
         this.game.gameOverDiv.classList.remove("hide");
         this.game.gameStatusDiv.innerText = `YOU WIN!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
-        console.log("win");
       } else {
+        console.log("lose");
         this.game.gameStatusDiv.innerText = `YOU LOSE!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
         this.game.gameOverDiv.classList.remove("hide");
