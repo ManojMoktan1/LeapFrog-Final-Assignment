@@ -1,4 +1,7 @@
 export class InputHandler {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     this.game = game;
     this.keys = [];

@@ -55,7 +55,9 @@ export class FlyingGhost extends Ghost {
   }
   update(deltaTime) {
     super.update(deltaTime);
+    //for every animation frame increase the value of angle by velocity of angle
     this.angle += this.va;
+    //add the velocity of angle to the y position and use Math.sin for wavy movement
     this.y += Math.sin(this.angle);
   }
 
@@ -113,6 +115,7 @@ export class GhostSpider extends Ghost {
   }
   draw(context) {
     super.draw(context);
+    //drawing spider web
     context.beginPath();
     context.moveTo(this.x + this.width / 2, 0);
     context.lineTo(this.x + this.width / 2, this.y + 50);

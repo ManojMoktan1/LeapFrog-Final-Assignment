@@ -16,6 +16,9 @@ const ATTACK = new Audio();
 ATTACK.src = "assests/Sounds/TailWhip.flac";
 
 export class Player {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     this.game = game;
     this.width = 70;
@@ -46,6 +49,7 @@ export class Player {
     this.currentState = null;
     this.cooldown = false;
   }
+  //input is the key pressed by the player
   update(input, deltaTime) {
     this.checkCollison();
     this.currentState.handleInput(input);
@@ -68,9 +72,12 @@ export class Player {
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
+
     //vertical boundaries
     if (this.y > this.game.height - this.height - this.game.groundMargin)
-      this.y = this.game.height - this.height - this.game.groundMargin; //sprite animation
+      this.y = this.game.height - this.height - this.game.groundMargin;
+
+    //animate the sprite around every 50 milliseconds
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
       if (this.frameX < this.maxFrame) this.frameX++;
@@ -167,9 +174,13 @@ export class Player {
     return this.y >= this.game.height - this.height - this.game.groundMargin;
   }
 
+  //state comes from handleInput in playerState.js
+  //speed is to adjust the background speed when player is in different state.
   setState(state, speed) {
     this.currentState = this.states[state];
+    //speed is different in different sprite animations
     this.game.speed = this.game.maxSpeed * speed;
+    //enters the corresponding method of the playerState.
     this.currentState.enter();
   }
   checkCollison() {

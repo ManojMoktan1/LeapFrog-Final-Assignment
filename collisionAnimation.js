@@ -1,4 +1,9 @@
 export class CollisionAnimation {
+  /**
+   * @param  {Game} game
+   * @param  {number} x
+   * @param  {number} y
+   */
   constructor(game, x, y) {
     this.game = game;
     this.image = document.getElementById("collisionAnimation");

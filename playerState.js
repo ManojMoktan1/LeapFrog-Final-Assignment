@@ -17,6 +17,10 @@ const states = {
 };
 
 class State {
+  /**
+   * @param  {State} state
+   * @param  {Game} game
+   */
   constructor(state, game) {
     this.state = state;
     this.game = game;
@@ -24,9 +28,13 @@ class State {
 }
 
 export class Standing extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("STANDING", game);
   }
+  //enter method sets the frame x and y of characters sprite to run that animation.
   enter() {
     this.game.player.image = document.getElementById("player");
     this.game.player.width = 70;
@@ -34,16 +42,22 @@ export class Standing extends State {
     this.game.player.frameY = 0;
     this.game.player.maxFrame = 0;
   }
+
+  //handleinput listens for keyboard input by the user
   handleInput(input) {
     if (input.includes("ArrowLeft") || input.includes("ArrowRight")) {
       this.game.player.setState(states.RUNNING, 1);
     } else if (input.includes(" ") && this.game.player.energy > 0) {
+      //states.Attacking is state[4] and 2 is the speed of the game
       this.game.player.setState(states.ATTACKING, 2);
     }
   }
 }
 
 export class Running extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("RUNNING", game);
   }
@@ -74,6 +88,9 @@ export class Running extends State {
 }
 
 export class Jumping extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("JUMPING", game);
   }
@@ -99,6 +116,9 @@ export class Jumping extends State {
 }
 
 export class Falling extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("FALLING", game);
   }
@@ -120,6 +140,9 @@ export class Falling extends State {
 }
 
 export class Attacking extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("ATTACKING", game);
     this.image = document.getElementById("player1");
@@ -160,6 +183,9 @@ export class Attacking extends State {
 }
 
 export class Diving extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("DIVING", game);
   }
@@ -198,6 +224,9 @@ export class Diving extends State {
 }
 
 export class Damage extends State {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     super("DAMAGE", game);
   }

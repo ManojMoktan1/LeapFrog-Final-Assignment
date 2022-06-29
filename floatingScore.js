@@ -1,4 +1,11 @@
 export class FloatingScore {
+  /**
+   * @param  {number} value
+   * @param  {number} x
+   * @param  {number} y
+   * @param  {number} targetX
+   * @param  {number} targetY
+   */
   constructor(value, x, y, targetX, targetY) {
     this.value = value;
     this.x = x;

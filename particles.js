@@ -1,4 +1,7 @@
 class Particle {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     this.game = game;
     this.checkForRemove = false;
@@ -12,6 +15,11 @@ class Particle {
 }
 
 export class Dust extends Particle {
+  /**
+   * @param  {Game} game
+   * @param  {number} x
+   * @param  {number} y
+   */
   constructor(game, x, y) {
     super(game);
     this.size = Math.random() * 10 + 10;
@@ -30,6 +38,11 @@ export class Dust extends Particle {
 }
 
 export class Splash extends Particle {
+  /**
+   * @param  {Game} game
+   * @param  {number} x
+   * @param  {number} y
+   */
   constructor(game, x, y) {
     super(game);
     this.size = Math.random() * 100 + 100;
@@ -51,6 +64,11 @@ export class Splash extends Particle {
 }
 
 export class Fire extends Particle {
+  /**
+   * @param  {Game} game
+   * @param  {number} x
+   * @param  {number} y
+   */
   constructor(game, x, y) {
     super(game);
     this.image = document.getElementById("fire");

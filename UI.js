@@ -5,6 +5,9 @@ const GAMEOVER = new Audio();
 GAMEOVER.src = "assests/Sounds/gamOver.wav";
 
 export class UI {
+  /**
+   * @param  {Game} game
+   */
   constructor(game) {
     this.game = game;
     this.fontSize = 30;

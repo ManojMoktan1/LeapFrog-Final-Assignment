@@ -4,13 +4,15 @@ import { Background } from "./background.js";
 import { FlyingGhost, GhostSpider, WalkingZombie } from "./ghosts.js";
 import { UI } from "./UI.js";
 
+//loads after loading DOM.
 window.addEventListener("load", function () {
+  //CANVAS
   const canvas = document.getElementById("canvas1");
   const ctx = canvas.getContext("2d");
   canvas.width = 1500;
   canvas.height = 500;
-  // canvas.width = window.innerWidth;
-  // canvas.height = window.innerHeight;
+
+  //getting DOM elements.
   const startMenu = document.querySelector(".start-menu");
   const startBtn = document.querySelector("#start-menu__play");
   const restartBtn = document.querySelector("#restart");
@@ -24,15 +26,17 @@ window.addEventListener("load", function () {
   // const GAMESOUND = new Audio();
   // GAMESOUND.src = "assests/Sounds/gameSound.wav";
 
+  //Initializing all the listeners
   function initializeListeners() {
+    //Runs Game after pressing on start button.
     startBtn.addEventListener("click", (e) => {
       e.preventDefault();
       startMenu.classList.add("hide");
-
       prevTime = Date.now();
       animate(0);
     });
 
+    //resets the game after pressing on restart button
     restartBtn.addEventListener("click", (e) => {
       e.preventDefault();
       game.gameRestart();
@@ -40,18 +44,22 @@ window.addEventListener("load", function () {
       animate(0);
     });
 
+    //displays the game tutorial information
     gameDescriptionBtn.addEventListener("click", () => {
       gameTutorial.classList.remove("hide");
     });
 
+    //displays the game controls information
     gameControlsBtn.addEventListener("click", () => {
       gameControlsDiv.classList.remove("hide");
     });
 
+    //closes the game tutorial information
     gameTutorialCloseBtn.addEventListener("click", () => {
       gameTutorial.classList.add("hide");
     });
 
+    //closes the game controls information
     gameControlsCloseBtn.addEventListener("click", () => {
       gameControlsDiv.classList.add("hide");
     });
@@ -62,7 +70,9 @@ window.addEventListener("load", function () {
      * @param  {number} width
      * @param  {number} height
      */
+
     constructor(width, height) {
+      //state of the game
       this.gameState = {
         currentState: 0,
         startState: 1,
@@ -76,7 +86,7 @@ window.addEventListener("load", function () {
       this.speed = 0;
       this.maxSpeed = 3;
       this.background = new Background(this);
-      this.player = new Player(this);
+      this.player = new Player(this); //instance of Player Class
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
       this.input = new InputHandler(this);
@@ -107,17 +117,18 @@ window.addEventListener("load", function () {
       );
     }
 
+    //Updates all the animations
     update(deltaTime, timeDif) {
       // this.sound.play();
       // this.sound.volume = 0.1;
-      console.log("delta time", deltaTime);
+
       this.time += timeDif;
-      // this.time += deltaTime;
       if (this.time > this.maxTime) {
         this.gameOver = true;
       }
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
+
       //handle ghosts
       if (this.ghostTimer > this.ghostInterval) {
         this.addGhost();
@@ -125,9 +136,12 @@ window.addEventListener("load", function () {
       } else {
         this.ghostTimer += deltaTime;
       }
+
+      //calling ghosts update method everytime
       this.ghosts.forEach((ghost) => {
         ghost.update(deltaTime);
       });
+
       //handle messages
       this.floatingScores.forEach((message) => {
         message.update();
@@ -144,7 +158,10 @@ window.addEventListener("load", function () {
       this.collisions.forEach((collision, index) => {
         collision.update(deltaTime);
       });
+
+      //Remove ghosts, particles,collisions and floatingScores if checkfor remove is true.
       this.ghosts = this.ghosts.filter((ghost) => !ghost.checkForRemove);
+
       this.particles = this.particles.filter(
         (particle) => !particle.checkForRemove
       );
@@ -156,16 +173,19 @@ window.addEventListener("load", function () {
       );
     }
 
+    //game reset function
     gameRestart() {
-      this.speed = 0;
       this.ghosts = [];
       this.particles = [];
       this.collisions = [];
       this.floatingScores = [];
+
+      this.speed = 0;
       this.score = 0;
       this.time = 0;
       this.gameOver = false;
       this.lives = 100;
+
       this.player = new Player(this);
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
@@ -174,6 +194,7 @@ window.addEventListener("load", function () {
       prevTime = Date.now();
     }
 
+    //draws all the animations
     draw(context) {
       this.background.draw(context);
       this.player.draw(context);
@@ -193,6 +214,7 @@ window.addEventListener("load", function () {
       this.UI.draw(context);
     }
 
+    //ghost adding function
     addGhost() {
       if (this.speed > 0 && Math.random() < 0.5)
         this.ghosts.push(new WalkingZombie(this));
@@ -201,12 +223,14 @@ window.addEventListener("load", function () {
     }
   }
 
+  //Game Object
   const game = new Game(canvas.width, canvas.height);
 
   let lastTime = 0;
   let prevTime;
   initializeListeners();
 
+  //animation function
   function animate(timeStamp) {
     // console.log("timestamp", timeStamp);
     const currentTime = Date.now();
@@ -221,6 +245,7 @@ window.addEventListener("load", function () {
     game.frames++;
     console.log(game.time);
     if (!game.gameOver) {
+      //loops animate function
       requestAnimationFrame(animate);
     }
   }
