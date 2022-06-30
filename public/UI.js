@@ -24,7 +24,11 @@ export class UI {
     context.fillText("SCORE: " + this.game.score, 20, 50);
 
     //highscore
-    context.fillText("HIGH SCORE: " + this.game.highScore, 700, 50);
+    if (this.game.score > this.game.highScore) {
+      context.fillText("HIGH SCORE: " + this.game.score, 700, 50);
+    } else {
+      context.fillText("HIGH SCORE: " + this.game.highScore, 700, 50);
+    }
 
     //timer
     context.font = this.fontSize * 0.8 + "px " + this.fontFamily;
@@ -51,16 +55,31 @@ export class UI {
 
     //game over messages
     if (this.game.gameOver) {
+      console.log("overrrr");
       //Game win condition
       if (this.game.score >= this.game.winningScore) {
         this.game.gameOverDiv.classList.remove("hide");
         this.game.gameStatusDiv.innerText = `YOU WIN!!!`;
-        this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
+        if (this.game.score > this.game.highScore) {
+          this.game.gameHighScore.innerText = `HighScore: ${this.game.score}`;
+        } else {
+          this.game.gameHighScore.innerText = `HighScore: ${this.game.highScore}`;
+        }
+        this.game.gameScore.innerHTML = `Score: ${this.game.score} `;
         this.game.sound.pause();
+        console.log("winning");
         //Game lose condition
       } else {
+        console.log("loosinggg");
         this.game.gameStatusDiv.innerText = `YOU LOSE!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
+        if (this.game.score > this.game.highScore) {
+          this.game.gameHighScore.innerText = `HighScore: ${this.game.score}`;
+        } else {
+          this.game.gameHighScore.innerText = `HighScore: ${this.game.highScore}`;
+          console.log("TESTING", this.game.highScore);
+          console.log("score", this.game.score);
+        }
         this.game.gameOverDiv.classList.remove("hide");
         this.game.sound.pause();
       }

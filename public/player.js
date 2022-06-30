@@ -221,6 +221,7 @@ export class Player {
           this.setState(6, 0);
           if (!this.game.score <= 0) this.game.score -= 1;
           this.game.lives -= 20;
+
           if (this.game.lives <= 0) {
             fetch("http://localhost:3000/highscore", {
               method: "PUT",
@@ -230,10 +231,14 @@ export class Player {
               body: JSON.stringify({
                 score: this.game.score,
               }),
-            }).then((resp) => {
-              this.game.gameOver = true;
-              console.log("response received", resp);
-            });
+            })
+              .then((resp) => {
+                this.game.gameOver = true;
+              })
+              .catch((err) => {
+                this.game.gameOver = true;
+                alert("Could not update highscore on backend");
+              });
           }
         }
       }

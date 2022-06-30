@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-image: url(./assests/images/ghostBackground.jpg);
+}
+
 #canvas1,
 .start-menu,
 .gameover-menu,
@@ -53,7 +57,7 @@
   text-align: center;
   flex-direction: column;
   color: #ffffff;
-  background-image: url(./assests/images/background1.jpg);
+  background-image: url(./assests/images/ghostBackground.jpg);
 }
 
 .start-menu__title {
@@ -63,7 +67,7 @@
 .game-tutorial,
 .game-controls {
   z-index: 3;
-  background-image: url(./assests/images/background1.jpg);
+  background-image: url(./assests/images/ghostBackground.jpg);
 }
 
 .game-tutorial__title,
@@ -121,6 +125,7 @@ li {
 
 .gameover-menu__title,
 .gameover-menu__game-status,
-.gameover-menu__score {
-  margin-bottom: 30px;
+.gameover-menu__score,
+.gameover-menu__highScore {
+  margin-bottom: 20px;
 }

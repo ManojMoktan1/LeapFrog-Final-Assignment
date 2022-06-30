@@ -145,12 +145,11 @@ window.addEventListener("load", function () {
       this.gameStatusDiv = document.querySelector(
         ".gameover-menu__game-status"
       );
+      this.gameHighScore = document.querySelector(".gameover-menu__highScore");
     }
 
     //Updates all the animations
     update(deltaTime, timeDif) {
-      console.log("highscore", this.highScore);
-
       this.time += timeDif;
       if (this.time > this.maxTime) {
         this.gameOver = true;
