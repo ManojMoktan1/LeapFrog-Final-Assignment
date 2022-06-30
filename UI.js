@@ -22,6 +22,10 @@ export class UI {
     context.fillStyle = this.game.fontColor;
     //score
     context.fillText("SCORE: " + this.game.score, 20, 50);
+
+    //highscore
+    context.fillText("HIGH SCORE: " + this.game.highScore, 700, 50);
+
     //timer
     context.font = this.fontSize * 0.8 + "px " + this.fontFamily;
     context.fillText(
@@ -43,20 +47,22 @@ export class UI {
     context.fillRect(100, 120, this.game.lives, 20);
 
     //target Score
-    context.fillText("Target: 60 ", 1400, 50);
+    context.fillText("Target: 60 ", 1300, 50);
 
     //game over messages
     if (this.game.gameOver) {
+      //Game win condition
       if (this.game.score >= this.game.winningScore) {
-        console.log("win");
         this.game.gameOverDiv.classList.remove("hide");
         this.game.gameStatusDiv.innerText = `YOU WIN!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
+        this.game.sound.pause();
+        //Game lose condition
       } else {
-        console.log("lose");
         this.game.gameStatusDiv.innerText = `YOU LOSE!!!`;
         this.game.gameScore.innerHTML = `Score: ${this.game.score}`;
         this.game.gameOverDiv.classList.remove("hide");
+        this.game.sound.pause();
       }
     }
   }

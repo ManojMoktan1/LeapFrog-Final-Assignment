@@ -15,6 +15,9 @@ import FireBall from "./FireBall.js";
 const ATTACK = new Audio();
 ATTACK.src = "assests/Sounds/TailWhip.flac";
 
+const fireBallAttack = new Audio();
+fireBallAttack.src = "assests/Sounds/nutfall.flac";
+
 export class Player {
   /**
    * @param  {Game} game
@@ -96,10 +99,7 @@ export class Player {
           ghost.y < fireball.y + fireball.height &&
           ghost.y + ghost.height > fireball.y
         ) {
-          // console.log("testing");
-          // if (ghost.unique) {
-          //   this.game.time -= 100;
-          // }
+          fireBallAttack.play();
           ghost.checkForRemove = true;
 
           // Unique ghosts
@@ -122,15 +122,19 @@ export class Player {
         }
       });
     });
+
+    // Handle Fireball
     this.game.fireballs = this.game.fireballs.filter(
       (fireball) => !fireball.checkForRemove
     );
 
-    //extra
     if (input.includes("r") && !this.cooldown) {
       this.game.fireballs.push(
         new FireBall(this.game, this.x, this.y, this.weight, this.height)
       );
+      if (this.energy > 0) {
+        this.energy -= 5;
+      }
       this.cooldown = true;
       setTimeout(() => {
         this.cooldown = false;
@@ -151,7 +155,6 @@ export class Player {
     ) {
       this.energy -= 5;
     }
-    console.log(this.energy);
   }
 
   draw(context) {
@@ -218,7 +221,20 @@ export class Player {
           this.setState(6, 0);
           if (!this.game.score <= 0) this.game.score -= 1;
           this.game.lives -= 20;
-          if (this.game.lives <= 0) this.game.gameOver = true;
+          if (this.game.lives <= 0) {
+            fetch("http://localhost:3000/highscore", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                score: this.game.score,
+              }),
+            }).then((resp) => {
+              this.game.gameOver = true;
+              console.log("response received", resp);
+            });
+          }
         }
       }
     });

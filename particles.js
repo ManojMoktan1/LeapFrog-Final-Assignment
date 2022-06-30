@@ -86,9 +86,13 @@ export class Fire extends Particle {
     this.x += Math.sin(this.angle * 5);
   }
   draw(context) {
+    //saves canvas state
     context.save();
+    //moves canvas top left position to fire particles x and  y positions.
     context.translate(this.x, this.y);
+    //rotates the canvas
     context.rotate(this.angle);
+
     context.drawImage(
       this.image,
       -this.size * 0.5,
@@ -96,6 +100,7 @@ export class Fire extends Particle {
       this.size,
       this.size
     );
+    //restores the canvas state
     context.restore();
   }
 }

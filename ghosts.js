@@ -94,6 +94,21 @@ export class WalkingZombie extends Ghost {
   }
 }
 
+export class GroundZombie extends Ghost {
+  constructor(game) {
+    super();
+    this.game = game;
+    this.width = 55.6;
+    this.height = 80;
+    this.x = this.game.width;
+    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.image = document.getElementById("ground_zombie");
+    this.speedX = 0;
+    this.speedY = 0;
+    this.maxFrame = 7;
+  }
+}
+
 export class GhostSpider extends Ghost {
   constructor(game) {
     super();

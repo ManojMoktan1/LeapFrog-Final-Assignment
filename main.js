@@ -1,7 +1,12 @@
 import { Player } from "./player.js";
 import { InputHandler } from "./input.js";
 import { Background } from "./background.js";
-import { FlyingGhost, GhostSpider, WalkingZombie } from "./ghosts.js";
+import {
+  FlyingGhost,
+  GhostSpider,
+  WalkingZombie,
+  GroundZombie,
+} from "./ghosts.js";
 import { UI } from "./UI.js";
 
 //loads after loading DOM.
@@ -22,18 +27,42 @@ window.addEventListener("load", function () {
   const gameTutorialCloseBtn = document.querySelector(".game-tutorial__close");
   const gameControlsDiv = document.querySelector(".game-controls");
   const gameControlsCloseBtn = document.querySelector(".game-controls__close");
+  const loading = document.querySelector(".loading");
 
   // const GAMESOUND = new Audio();
   // GAMESOUND.src = "assests/Sounds/gameSound.wav";
 
+  function getHighScore() {
+    fetch("http://localhost:3000/highscore")
+      .then((data) => {
+        return data.json();
+      })
+      .then((parsedData) => {
+        loading.classList.add("hide");
+        startMenu.classList.add("hide");
+
+        game.highScore = +parsedData.highscore;
+        animate(0);
+      })
+      .catch((err) => {
+        alert("couldnot fetch high score!!!");
+        startMenu.classList.add("hide");
+
+        loading.classList.add("hide");
+
+        game.highScore = 999;
+        animate(0);
+      });
+  }
   //Initializing all the listeners
   function initializeListeners() {
     //Runs Game after pressing on start button.
     startBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      startMenu.classList.add("hide");
       prevTime = Date.now();
-      animate(0);
+      // console.log("testing", sgame.highScore);
+      loading.classList.remove("hide");
+      getHighScore();
     });
 
     //resets the game after pressing on restart button
@@ -41,7 +70,7 @@ window.addEventListener("load", function () {
       e.preventDefault();
       game.gameRestart();
       prevTime = Date.now();
-      animate(0);
+      getHighScore();
     });
 
     //displays the game tutorial information
@@ -105,6 +134,7 @@ window.addEventListener("load", function () {
       this.maxTime = 60000;
       this.gameOver = false;
       this.lives = 100;
+      this.highScore = 0;
 
       this.sound = new Audio();
       this.sound.src = "assests/Sounds/gameSound1.mp3";
@@ -119,8 +149,7 @@ window.addEventListener("load", function () {
 
     //Updates all the animations
     update(deltaTime, timeDif) {
-      // this.sound.play();
-      // this.sound.volume = 0.1;
+      console.log("highscore", this.highScore);
 
       this.time += timeDif;
       if (this.time > this.maxTime) {
@@ -154,6 +183,7 @@ window.addEventListener("load", function () {
       if (this.particles.length > this.maxParticles) {
         this.particles.length = this.maxParticles;
       }
+
       //handle collision sprites
       this.collisions.forEach((collision, index) => {
         collision.update(deltaTime);
@@ -213,11 +243,14 @@ window.addEventListener("load", function () {
 
       this.UI.draw(context);
     }
-
     //ghost adding function
     addGhost() {
+      //when math.random is less than 0.5 add walking zombie
       if (this.speed > 0 && Math.random() < 0.5)
         this.ghosts.push(new WalkingZombie(this));
+      else if (this.speed > 0 && Math.random() > 0.7)
+        this.ghosts.push(new GroundZombie(this));
+      //else add ghost spider
       else if (this.speed > 0) this.ghosts.push(new GhostSpider(this));
       this.ghosts.push(new FlyingGhost(this));
     }
@@ -232,7 +265,6 @@ window.addEventListener("load", function () {
 
   //animation function
   function animate(timeStamp) {
-    // console.log("timestamp", timeStamp);
     const currentTime = Date.now();
     const timeDif = currentTime - prevTime;
     prevTime = currentTime;
@@ -243,9 +275,10 @@ window.addEventListener("load", function () {
     game.update(deltaTime, timeDif);
     game.draw(ctx);
     game.frames++;
-    console.log(game.time);
     if (!game.gameOver) {
       //loops animate function
+      game.sound.play();
+      game.sound.volume = 0.1;
       requestAnimationFrame(animate);
     }
   }

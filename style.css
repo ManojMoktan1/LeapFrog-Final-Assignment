@@ -33,7 +33,8 @@
 #fire,
 #collisionAnimation,
 #lives,
-#fireball {
+#fireball,
+#ground_zombie {
   display: none;
 }
 
