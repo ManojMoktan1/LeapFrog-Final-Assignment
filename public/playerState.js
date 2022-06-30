@@ -18,7 +18,7 @@ const states = {
 
 class State {
   /**
-   * @param  {State} state
+   * @param  {String} state
    * @param  {Game} game
    */
   constructor(state, game) {

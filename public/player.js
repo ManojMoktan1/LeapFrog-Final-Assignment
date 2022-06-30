@@ -147,6 +147,7 @@ export class Player {
       this.game.frames % 50 === 0
     ) {
       this.energy += 5;
+
       //after main loop runs 10 time in rolling state decrease the energy by 1.
     } else if (
       this.currentState === this.states[4] &&
@@ -223,7 +224,7 @@ export class Player {
           this.game.lives -= 20;
 
           if (this.game.lives <= 0) {
-            fetch("http://localhost:3000/highscore", {
+            fetch("http://localhost:3001/highscore", {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",

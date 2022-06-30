@@ -50,7 +50,6 @@ export class FlyingGhost extends Ghost {
     this.image1 = document.getElementById("ghost_black");
     this.angle = 0;
     this.va = Math.random() * 0.1 + 0.1; //velocity of angle for angle
-    // this.unique = this.game.frames % 1 == 0 ? true : false;
     this.unique = Math.random() > 0.85 ? true : false;
   }
   update(deltaTime) {

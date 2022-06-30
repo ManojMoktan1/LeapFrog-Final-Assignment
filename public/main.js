@@ -33,7 +33,7 @@ window.addEventListener("load", function () {
   // GAMESOUND.src = "assests/Sounds/gameSound.wav";
 
   function getHighScore() {
-    fetch("http://localhost:3000/highscore")
+    fetch("http://localhost:3001/highscore")
       .then((data) => {
         return data.json();
       })
@@ -111,35 +111,47 @@ window.addEventListener("load", function () {
 
       this.width = width;
       this.height = height;
-      this.groundMargin = 30;
+      this.groundMargin = 20;
+
       this.speed = 0;
       this.maxSpeed = 3;
+
       this.background = new Background(this);
       this.player = new Player(this); //instance of Player Class
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
       this.input = new InputHandler(this);
       this.UI = new UI(this);
+
       this.ghosts = [];
       this.particles = [];
       this.collisions = [];
       this.floatingScores = [];
+      this.fireballs = [];
+
       this.maxParticles = 100;
+
       this.ghostTimer = 0;
       this.ghostInterval = 1000;
+
       this.score = 0;
       this.winningScore = 60;
+      this.highScore = 0;
+
       this.fontColor = "white";
+
       this.time = 0;
       this.maxTime = 60000;
+
       this.gameOver = false;
+
       this.lives = 100;
-      this.highScore = 0;
 
       this.sound = new Audio();
       this.sound.src = "assests/Sounds/gameSound1.mp3";
-      this.fireballs = [];
+
       this.frames = 0;
+
       this.gameOverDiv = document.querySelector(".gameover-menu");
       this.gameScore = document.querySelector(".gameover-menu__score");
       this.gameStatusDiv = document.querySelector(
