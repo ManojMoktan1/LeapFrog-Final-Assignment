@@ -260,7 +260,7 @@ window.addEventListener("load", function () {
       //when math.random is less than 0.5 add walking zombie
       if (this.speed > 0 && Math.random() < 0.5)
         this.ghosts.push(new WalkingZombie(this));
-      else if (this.speed > 0 && Math.random() > 0.7)
+      else if (this.speed > 0 && Math.random() > 0.6)
         this.ghosts.push(new GroundZombie(this));
       //else add ghost spider
       else if (this.speed > 0) this.ghosts.push(new GhostSpider(this));

@@ -103,11 +103,40 @@ export class GroundZombie extends Ghost {
     this.width = 55.6;
     this.height = 80;
     this.x = this.game.width;
-    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.finalyY = this.game.height - this.height - this.game.groundMargin;
+    this.y = this.game.height - this.game.groundMargin;
     this.image = document.getElementById("ground_zombie");
     this.speedX = 0;
-    this.speedY = 0;
+    this.speedY = -3;
     this.maxFrame = 7;
+  }
+  update(deltaTime) {
+    this.x -= this.speedX + this.game.speed;
+    if (this.y >= this.finalyY) {
+      this.y += this.speedY;
+    }
+    if (this.frameTimer > this.frameInterval) {
+      this.frameTimer = 0;
+      if (this.frameX < this.maxFrame) this.frameX++;
+      else this.frameX = 0;
+    } else {
+      this.frameTimer += deltaTime;
+    }
+    //check if off screen
+    if (this.x + this.width < 0) this.checkForRemove = true;
+  }
+  draw(context) {
+    context.drawImage(
+      this.image,
+      this.frameX * this.width,
+      0,
+      this.width,
+      this.height,
+      this.x,
+      this.y - 200,
+      this.width + 50,
+      this.height + 300
+    );
   }
 }
 
