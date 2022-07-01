@@ -254,6 +254,7 @@ window.addEventListener("load", function () {
 
       this.UI.draw(context);
     }
+
     //ghost adding function
     addGhost() {
       //when math.random is less than 0.5 add walking zombie
@@ -282,10 +283,12 @@ window.addEventListener("load", function () {
 
     const deltaTime = timeStamp - lastTime;
     lastTime = timeStamp;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime, timeDif);
     game.draw(ctx);
     game.frames++;
+
     if (!game.gameOver) {
       //loops animate function
       game.sound.play();

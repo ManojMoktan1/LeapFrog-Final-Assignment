@@ -21,6 +21,7 @@ export class CollisionAnimation {
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
   }
+
   draw(context) {
     context.drawImage(
       this.image,
@@ -34,6 +35,7 @@ export class CollisionAnimation {
       this.height
     );
   }
+
   update(deltaTime) {
     this.x -= this.game.speed;
     if (this.frameTimer > this.frameInterval) {

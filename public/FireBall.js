@@ -20,6 +20,7 @@ export default class FireBall {
     this.image = document.getElementById("fireball");
     this.checkForRemove = false;
   }
+
   /**
    * Draws the fireball on the canvas
    * @param  {Context} ctx
@@ -37,6 +38,7 @@ export default class FireBall {
       45
     );
   }
+
   /**
    * updates the position of the fireball and removes the fireball
    * if x position of fireball is larger than canvas width

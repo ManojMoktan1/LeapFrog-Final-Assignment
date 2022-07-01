@@ -21,6 +21,7 @@ export class FloatingScore {
     this.timer++;
     if (this.timer > 100) this.checkForRemove = true;
   }
+
   draw(context) {
     context.font = "22px Creepster";
     context.fillStyle = "white";

@@ -38,6 +38,7 @@ class Ghost {
 export class FlyingGhost extends Ghost {
   constructor(game) {
     super();
+
     this.game = game;
     this.width = 87;
     this.height = 72;
@@ -46,8 +47,10 @@ export class FlyingGhost extends Ghost {
     this.speedX = Math.random() + 1;
     this.speedY = 0;
     this.maxFrame = 5;
+
     this.image = document.getElementById("flying_ghost");
     this.image1 = document.getElementById("ghost_black");
+
     this.angle = 0;
     this.va = Math.random() * 0.1 + 0.1; //velocity of angle for angle
     this.unique = Math.random() > 0.85 ? true : false;
@@ -127,9 +130,10 @@ export class GhostSpider extends Ghost {
       this.speedY *= -1;
     if (this.y < -this.height) this.checkForRemove = true;
   }
+
+  //drawing spider web
   draw(context) {
     super.draw(context);
-    //drawing spider web
     context.beginPath();
     context.moveTo(this.x + this.width / 2, 0);
     context.lineTo(this.x + this.width / 2, this.y + 50);

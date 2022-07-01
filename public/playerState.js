@@ -1,11 +1,14 @@
 import { Dust, Fire, Splash } from "./particles.js";
 
+//audio for jump
 const JUMP = new Audio();
 JUMP.src = "assests/Sounds/jump1.wav";
 
+//audio when player takes hit
 const CRASH = new Audio();
 CRASH.src = "assests/Sounds/takeHit.wav";
 
+//different state for player
 const states = {
   STANDING: 0,
   RUNNING: 1,
@@ -34,6 +37,7 @@ export class Standing extends State {
   constructor(game) {
     super("STANDING", game);
   }
+
   //enter method sets the frame x and y of characters sprite to run that animation.
   enter() {
     this.game.player.image = document.getElementById("player");
@@ -94,6 +98,7 @@ export class Jumping extends State {
   constructor(game) {
     super("JUMPING", game);
   }
+
   enter() {
     if (this.game.player.onGround()) this.game.player.vy -= 27;
     this.game.player.image = document.getElementById("player");
@@ -104,6 +109,7 @@ export class Jumping extends State {
     this.game.player.maxFrame = 3;
     JUMP.play();
   }
+
   handleInput(input) {
     if (this.game.player.vy > this.game.player.weight) {
       this.game.player.setState(states.FALLING, 1);
@@ -122,6 +128,7 @@ export class Falling extends State {
   constructor(game) {
     super("FALLING", game);
   }
+
   enter() {
     this.game.player.image = document.getElementById("player");
     this.game.player.width = 72;
@@ -130,6 +137,7 @@ export class Falling extends State {
     this.game.player.maxFrame = 5;
     this.game.player.frameY = 7;
   }
+
   handleInput(input) {
     if (this.game.player.onGround()) {
       this.game.player.setState(states.RUNNING, 1);
@@ -164,6 +172,7 @@ export class Attacking extends State {
         this.game.player.y + this.game.player.height * 0.5
       )
     );
+
     if (input.includes(" ") && this.game.player.energy <= 0) {
       this.game.player.setState(states.RUNNING, 1);
     } else if (!input.includes(" ") && this.game.player.onGround()) {
@@ -198,6 +207,7 @@ export class Diving extends State {
     this.game.player.frameY = 0;
     this.game.player.vy = 15;
   }
+
   handleInput(input) {
     this.game.particles.unshift(
       new Fire(
@@ -206,6 +216,7 @@ export class Diving extends State {
         this.game.player.y + this.game.player.height * 0.5
       )
     );
+
     if (this.game.player.onGround()) {
       this.game.player.setState(states.RUNNING, 1);
       for (let i = 0; i < 30; i++) {
@@ -230,6 +241,7 @@ export class Damage extends State {
   constructor(game) {
     super("DAMAGE", game);
   }
+
   enter() {
     this.game.player.image = document.getElementById("player");
     this.game.player.width = 90;
@@ -239,6 +251,7 @@ export class Damage extends State {
     this.game.player.frameY = 8;
     CRASH.play();
   }
+
   handleInput(input) {
     if (this.game.player.frameX >= 6 && this.game.player.onGround()) {
       this.game.player.setState(states.RUNNING, 1);
